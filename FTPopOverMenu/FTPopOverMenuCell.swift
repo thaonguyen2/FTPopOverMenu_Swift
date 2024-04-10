@@ -27,12 +27,13 @@ class FTPopOverMenuCell: UITableViewCell {
 
     func setupCellWith(menuName: FTMenuObject, menuImage: Imageable?, configuration: FTConfiguration) {
         self.backgroundColor = UIColor.clear
+        iconImageView.isHidden = true
         
         // configure cell text
         nameLabel.font = configuration.textFont
         nameLabel.textColor = configuration.textColor
         nameLabel.textAlignment = configuration.textAlignment
-        nameLabel.frame = CGRect(x: FT.DefaultCellMargin, y: 0, width: configuration.menuWidth - FT.DefaultCellMargin*2, height: configuration.menuRowHeight)
+        nameLabel.frame = CGRect(x: FT.DefaultCellMargin, y: 0, width: configuration.menuWidth - FT.DefaultCellMargin*2 - configuration.menuIconSize, height: configuration.menuRowHeight)
         
         // configure cell image
         var iconImage: UIImage? = nil
@@ -44,6 +45,7 @@ class FTPopOverMenuCell: UITableViewCell {
             iconImage = (menuName as! FTPopOverMenuModel).image?.getImage()
             if ((menuName as! FTPopOverMenuModel).selected == true) {
                 nameLabel.textColor = configuration.selectedTextColor
+                iconImageView.isHidden = false
                 self.backgroundColor = configuration.selectedCellBackgroundColor
             }
         }
@@ -54,9 +56,8 @@ class FTPopOverMenuCell: UITableViewCell {
                 iconImage = iconImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             }
             iconImageView.tintColor = configuration.textColor
-            iconImageView.frame =  CGRect(x: FT.DefaultCellMargin, y: (configuration.menuRowHeight - configuration.menuIconSize)/2, width: configuration.menuIconSize, height: configuration.menuIconSize)
+            iconImageView.frame =  CGRect(x: configuration.menuWidth - FT.DefaultCellMargin - configuration.menuIconSize, y: (configuration.menuRowHeight - configuration.menuIconSize)/2, width: configuration.menuIconSize, height: configuration.menuIconSize)
             iconImageView.image = iconImage
-            nameLabel.frame = CGRect(x: FT.DefaultCellMargin*2 + configuration.menuIconSize, y: (configuration.menuRowHeight - configuration.menuIconSize)/2, width: (configuration.menuWidth - configuration.menuIconSize - FT.DefaultCellMargin*3), height: configuration.menuIconSize)
         }
     }
     
